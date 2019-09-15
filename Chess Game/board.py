@@ -47,7 +47,7 @@ class Board:
         self.pieceOnBoard = self.chessBoard[self.x1][self.y1]
 
         # check side validity
-        if not ((turn and self.pieceOnBoard.isupper()) or ((not turn) and self.pieceOnBoard.islower())):
+        if not ((turn%2==0 and self.pieceOnBoard.isupper()) or ((turn%2==1) and self.pieceOnBoard.islower())):
           return False
 
         # get all the possible moves that can be made by that particular piece
@@ -87,10 +87,37 @@ class Board:
         # possibleOrNot() function is called to check if the proposed move is in the list of the possible moves
         elif (self.possibleOrNot(self.move2compare, the_possible_moves)):
             # if the above check is passed, then makeMove() function will be fired to execute the move. Parameter 3 is simply given to notify that this is not a castling call.
-            self.makeMove(move2compare, 3)
-            if (turn and self.CheckState("White")) or ((not turn) and self.CheckState("Black")):
+            checkmated = self.makeMove(move2compare, 3)
+            if checkmated:
+                return "Checkmate"
+            if (turn%2==0 and self.CheckState("White")) or ((turn%2==1) and self.CheckState("Black")):
                 return False
             else:
+                xMappings = {
+                    1: 'a',
+                    2: 'b',
+                    3: 'c',
+                    4: 'd',
+                    5: 'e',
+                    6: 'f',
+                    7: 'g',
+                    8: 'h'
+                }
+                # Print notation IN BETA
+                if (turn%2==0): # if white
+                    print(int(turn/2+1), end = '')
+                    print('. ', end = '')
+                    if self.pieceOnBoard != 'P':
+                        print(self.pieceOnBoard, end = '')
+                    print(xMappings.get(self.x2), end = '')
+                    print(self.y2, end = '')
+                else: # if black
+                    print(' ', end = '')
+                    if self.pieceOnBoard != 'p':
+                        print(self.pieceOnBoard, end = '')
+                    print(xMappings.get(self.x2), end = '')
+                    print(self.y2, end = '')
+                    print()
                 whiteUnderCheck = False
                 blackUnderCheck = False
                 return True
@@ -238,9 +265,9 @@ class Board:
             pass
         # if the CheckState() function returns true, Check_Checkmate() is called to check if a checkmate is made or not.
         if self.CheckState("Black") == True:
-            self.Check_CheckMate("Black")
+            return self.Check_CheckMate("Black")
         if self.CheckState("White") == True:
-            self.Check_CheckMate("White")
+            return self.Check_CheckMate("White")
 
     # calculate all the legal moves
     def possibleMoves(self, piece):
@@ -1108,6 +1135,9 @@ class Board:
             # if every single move of white ends in Check, that denotes Checkmate!
             if counter == len(allPossibleMoves):
                 print("Checkmate")
+                return True
+            else:
+                return False
 
         # Checkmate test for black
         elif colour == "Black":
@@ -1140,6 +1170,9 @@ class Board:
             # if every single move of black ends in Check, that denotes Checkmate!
             if counter == len(allPossibleMoves):
                 print("Checkmate")
+                return True
+            else:
+                return False
 
     # this function is used to check if there's a pawn that has reached the final rank
     def Promotion_Check(self, colour):
@@ -1168,42 +1201,41 @@ class Board:
         promotionpiece = ""
 
         # these 2 lines is to prompt the players for their desired promotion piece
-        print("What would you like your pawn to be promoted to? Default is Queen")
-        promotionpiece = input()
+        # print("What would you like your pawn to be promoted to? Default is Queen")
+        # promotionpiece = input()
 
         # for players that play the white pieces
         if colour == "White":
-
-            if promotionpiece == "Rook":
-                # replaces the pawn's position with a Rook
-                self.chessBoard[row][column] = "R"
-            elif promotionpiece == "Queen":
-                # replaces the pawn's position with a Queen
-                self.chessBoard[row][column] = "Q"
-            elif promotionpiece == "Knight":
-                # replaces the pawn's position with a Knight
-                self.chessBoard[row][column] = "N"
-            elif promotionpiece == "Bishop":
-                # replaces the pawn's position with a Bishop
-                self.chessBoard[row][column] = "B"
-            else:
+            # if promotionpiece == "Rook":
+            #     # replaces the pawn's position with a Rook
+            #     self.chessBoard[row][column] = "R"
+            # elif promotionpiece == "Queen":
+            #     # replaces the pawn's position with a Queen
+            #     self.chessBoard[row][column] = "Q"
+            # elif promotionpiece == "Knight":
+            #     # replaces the pawn's position with a Knight
+            #     self.chessBoard[row][column] = "N"
+            # elif promotionpiece == "Bishop":
+            #     # replaces the pawn's position with a Bishop
+            #     self.chessBoard[row][column] = "B"
+            # else:
                 # if the user did not enter anything, or entered something else other than the 4 words above, a Queen will be automatically given
                 self.chessBoard[row][column] = "Q"
 
         # for players that play the black pieces
         if colour == "Black":
-            if promotionpiece == "Rook":
-                # replaces the pawn's position with a Rook
-                self.chessBoard[row][column] = "r"
-            elif promotionpiece == "Queen":
-                # replaces the pawn's position with a Queen
-                self.chessBoard[row][column] = "q"
-            elif promotionpiece == "Knight":
-                # replaces the pawn's position with a Knight
-                self.chessBoard[row][column] = "n"
-            elif promotionpiece == "Bishop":
-                # replaces the pawn's position with a Bishop
-                self.chessBoard[row][column] = "b"
-            else:
+            # if promotionpiece == "Rook":
+            #     # replaces the pawn's position with a Rook
+            #     self.chessBoard[row][column] = "r"
+            # elif promotionpiece == "Queen":
+            #     # replaces the pawn's position with a Queen
+            #     self.chessBoard[row][column] = "q"
+            # elif promotionpiece == "Knight":
+            #     # replaces the pawn's position with a Knight
+            #     self.chessBoard[row][column] = "n"
+            # elif promotionpiece == "Bishop":
+            #     # replaces the pawn's position with a Bishop
+            #     self.chessBoard[row][column] = "b"
+            # else:
                 # if the user did not enter anything, or entered something else other than the 4 words above, a Queen will be automatically given
                 self.chessBoard[row][column] = "q"

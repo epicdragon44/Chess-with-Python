@@ -14,7 +14,7 @@ class BoardGUI:
 
     # constructor (will be called automatically when the class is called)
     def __init__(self):
-        self.turn = True
+        self.turn = 0
 
         # initialize the GUI frame
         self.root = Tk()
@@ -59,10 +59,10 @@ class BoardGUI:
         self.w.create_image(2, 650, anchor='nw', image=self.w.logo)
 
         self.w.whiteTurn = PhotoImage(file='WhiteTurn.png').subsample(3, 3)
-        self.w.create_image(642, 560, anchor='nw', image=self.w.whiteTurn)
+        self.w.create_image(642, 600, anchor='nw', image=self.w.whiteTurn)
         self.w.blackTurn = PhotoImage(file='BlackTurn.png').subsample(3, 3)
-        self.w.create_image(642, 50, anchor='nw', image=self.w.blackTurn)
-        self.w.create_rectangle(642, 50, 842, 250, fill='white', outline="")
+        self.w.create_image(642, 0, anchor='nw', image=self.w.blackTurn)
+        self.w.create_rectangle(642, 0, 842, 250, fill='white', outline="")
 
         # this command updates the GUI every 10 miliseconds
         # calls the drawPieces() function every 10 miliseconds
@@ -92,16 +92,19 @@ class BoardGUI:
         # this calls back the function drawPieces() after 100 miliseconds
         self.root.after(100, self.drawPieces())
 
+        if worked=="Checkmate":
+            self.w.checkmate = PhotoImage(file='Checkmate.png')
+            self.w.create_image(2, 650, anchor='nw', image=self.w.checkmate)
         if worked:
-            if not self.turn:  # if white
-                self.w.create_rectangle(642, 50, 842, 250, fill='white', outline="")  # cover up black
+            if not self.turn%2==0:  # if white
+                self.w.create_rectangle(642, 0, 842, 250, fill='white', outline="")  # cover up black
                 self.w.whiteTurn = PhotoImage(file='WhiteTurn.png').subsample(3, 3)  # create white
-                self.w.create_image(642, 560, anchor='nw', image=self.w.whiteTurn)
+                self.w.create_image(642, 600, anchor='nw', image=self.w.whiteTurn)
             else:  # if black
-                self.w.create_rectangle(642, 560, 842, 760, fill='white', outline="")  # cover up white
+                self.w.create_rectangle(642, 600, 842, 760, fill='white', outline="")  # cover up white
                 self.w.blackTurn = PhotoImage(file='BlackTurn.png').subsample(3, 3)  # create black
-                self.w.create_image(642, 50, anchor='nw', image=self.w.blackTurn)
-            self.turn = not self.turn
+                self.w.create_image(642, 0, anchor='nw', image=self.w.blackTurn)
+            self.turn = self.turn+1
 
         return
 
