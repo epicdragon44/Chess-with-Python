@@ -25,8 +25,8 @@ class BoardGUI:
         #     print ("")
 
         # set the cavas height and width
-        self.canvas_width = 800
-        self.canvas_height = 800
+        self.canvas_width = 1000
+        self.canvas_height = 830
 
         # set the square size
         self.square_size = 80
@@ -42,7 +42,7 @@ class BoardGUI:
         self.w.pack()
 
         # Fill in background as white
-        self.w.create_rectangle(0, 0, 1000, 1000, fill='white', outline="")
+        self.w.create_rectangle(0, 0, 2000, 2000, fill='white', outline="")
 
         # this creates the chess board
         # this goes from left to right, top to bottom
@@ -55,14 +55,22 @@ class BoardGUI:
                     self.w.create_rectangle(i * self.square_size, j * self.square_size, self.square_size * (i + 1),
                                             self.square_size * (j + 1), fill="dark red")
 
+        self.w.yAxis = PhotoImage(file='yAxis.png')
+        self.w.create_image(642, 2, anchor='nw', image=self.w.yAxis)
+        self.w.xAxis = PhotoImage(file='xAxis.png')
+        self.w.create_image(2, 642, anchor='nw', image=self.w.xAxis)
+
         self.w.logo = PhotoImage(file='ChessComrades.png')
-        self.w.create_image(2, 650, anchor='nw', image=self.w.logo)
+        self.w.create_image(1, 682, anchor='nw', image=self.w.logo)
+
+        self.w.meme = PhotoImage(file='lmaoo.png')
+        self.w.create_image(640, 635, anchor='nw', image=self.w.meme)
 
         self.w.whiteTurn = PhotoImage(file='WhiteTurn.png').subsample(3, 3)
-        self.w.create_image(642, 600, anchor='nw', image=self.w.whiteTurn)
+        self.w.create_image(675, 590, anchor='nw', image=self.w.whiteTurn)
         self.w.blackTurn = PhotoImage(file='BlackTurn.png').subsample(3, 3)
-        self.w.create_image(642, 0, anchor='nw', image=self.w.blackTurn)
-        self.w.create_rectangle(642, 0, 842, 250, fill='white', outline="")
+        self.w.create_image(675, 0, anchor='nw', image=self.w.blackTurn)
+        self.w.create_rectangle(675, 0, 842, 250, fill='white', outline="")
 
         # this command updates the GUI every 10 miliseconds
         # calls the drawPieces() function every 10 miliseconds
@@ -94,16 +102,16 @@ class BoardGUI:
 
         if worked=="Checkmate":
             self.w.checkmate = PhotoImage(file='Checkmate.png')
-            self.w.create_image(2, 650, anchor='nw', image=self.w.checkmate)
+            self.w.create_image(2, 700, anchor='nw', image=self.w.checkmate)
         if worked:
             if not self.turn%2==0:  # if white
-                self.w.create_rectangle(642, 0, 842, 250, fill='white', outline="")  # cover up black
+                self.w.create_rectangle(675, 0, 842, 200, fill='white', outline="")  # cover up black
                 self.w.whiteTurn = PhotoImage(file='WhiteTurn.png').subsample(3, 3)  # create white
-                self.w.create_image(642, 600, anchor='nw', image=self.w.whiteTurn)
+                self.w.create_image(675, 590, anchor='nw', image=self.w.whiteTurn)
             else:  # if black
-                self.w.create_rectangle(642, 600, 842, 760, fill='white', outline="")  # cover up white
+                self.w.create_rectangle(675, 590, 842, 635, fill='white', outline="")  # cover up white
                 self.w.blackTurn = PhotoImage(file='BlackTurn.png').subsample(3, 3)  # create black
-                self.w.create_image(642, 0, anchor='nw', image=self.w.blackTurn)
+                self.w.create_image(675, 0, anchor='nw', image=self.w.blackTurn)
             self.turn = self.turn+1
 
         return
