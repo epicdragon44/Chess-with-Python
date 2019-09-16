@@ -66,10 +66,12 @@ class Board:
                     if (self.x2 == 7 and self.y2 == 6) and KingcastlingStateWhite == True:
                         self.Kingcolour = "White"
                         self.Castling(self.Kingcolour, self.x1, self.y1, self.x2, self.y2)
+                        return True
                     # if the above checks are passed, the Castling function will be called by passing the necessary parameters
                     elif (self.x2 == 7 and self.y2 == 2) and QueencastlingStateWhite == True:
                         self.Kingcolour = "White"
                         self.Castling(self.Kingcolour, self.x1, self.y1, self.x2, self.y2)
+                        return True
 
                 # check for black's castling state
                 elif self.pieceOnBoard == "k" and (QueencastlingStateBlack == True or KingcastlingStateBlack == True):
@@ -77,10 +79,12 @@ class Board:
                         # if the above checks are passed, the Castling function will be called by passing the necessary parameters
                         self.Kingcolour = "Black"
                         self.Castling(self.Kingcolour, self.x1, self.y1, self.x2, self.y2)
+                        return True
                     elif (self.x2 == 0 and self.y2 == 2) and QueencastlingStateBlack == True:
                         # if the above checks are passed, the Castling function will be called by passing the necessary parameters
                         self.Kingcolour = "Black"
                         self.Castling(self.Kingcolour, self.x1, self.y1, self.x2, self.y2)
+                        return True
             else:
                 return False
 
