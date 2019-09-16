@@ -28,7 +28,7 @@ class BoardGUI:
         #     print ("")
 
         # set the cavas height and width
-        self.canvas_width = 1000
+        self.canvas_width = 1245
         self.canvas_height = 830
 
         # set the square size
@@ -75,7 +75,8 @@ class BoardGUI:
         self.w.create_image(675, 0, anchor='nw', image=self.w.blackTurn)
         self.w.create_rectangle(675, 0, 842, 250, fill='white', outline="")
 
-        self.w.create_text(925, 15, fill="black", font="Times 15 bold", text="Game Notation")
+        self.w.notationBox = PhotoImage(file="Notation.png")
+        self.w.create_image(840, 0, anchor='nw', image=self.w.notationBox)
 
         # this command updates the GUI every 10 miliseconds
         # calls the drawPieces() function every 10 miliseconds
@@ -125,15 +126,23 @@ class BoardGUI:
     def drawPieces(self):
 
         if (self.turn % 2 != 0):
+            xStartPx = 925
             # draw notation onto screen
             self.w.create_rectangle(840, 0, 2000, 2000, fill='white', outline="")  # cover up old text
-            self.w.create_text(925, 15, fill="black", font="Times 15 bold", text="Game Notation")
+            self.w.notationBox = PhotoImage(file="Notation.png")
+            self.w.create_image(840, 0, anchor='nw', image=self.w.notationBox)
             F = open("notation.txt", "r+")
             input = F.readlines()
-            startPixel = 45
+            yStartPx = 45
+            count = 0;
             for line in input:
-                self.w.create_text(925, startPixel, fill="black", font="Times 7", text=line)
-                startPixel = startPixel+15
+                self.w.create_text(xStartPx, yStartPx, fill="black", font="Times 7", text=line)
+                count = count + 1
+                yStartPx = yStartPx + 16
+                if count > 45:
+                    xStartPx = xStartPx + 75
+                    count = 0
+                    yStartPx = 45
 
         # all these lines set the variables to the right image path
         # subsample function reduces the size of the image

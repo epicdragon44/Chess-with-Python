@@ -1,4 +1,7 @@
 1. d4 d5
 2. c4 e6
 3. Nf3 nf6
-4. e3 c6
+4. Nc3 nc6
+5. g3 bb4
+6. Bd2 bd7
+7. Bg2 bd7
