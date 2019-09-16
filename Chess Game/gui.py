@@ -14,6 +14,9 @@ class BoardGUI:
 
     # constructor (will be called automatically when the class is called)
     def __init__(self):
+        clear = open("notation.txt", "w+")
+        clear.write("")
+
         self.turn = 0
 
         # initialize the GUI frame
@@ -72,6 +75,8 @@ class BoardGUI:
         self.w.create_image(675, 0, anchor='nw', image=self.w.blackTurn)
         self.w.create_rectangle(675, 0, 842, 250, fill='white', outline="")
 
+        self.w.create_text(925, 15, fill="black", font="Times 15 bold", text="Game Notation")
+
         # this command updates the GUI every 10 miliseconds
         # calls the drawPieces() function every 10 miliseconds
         self.root.after(10, self.drawPieces)
@@ -102,7 +107,7 @@ class BoardGUI:
 
         if worked=="Checkmate":
             self.w.checkmate = PhotoImage(file='Checkmate.png')
-            self.w.create_image(2, 700, anchor='nw', image=self.w.checkmate)
+            self.w.create_image(2, 682, anchor='nw', image=self.w.checkmate)
         if worked:
             if not self.turn%2==0:  # if white
                 self.w.create_rectangle(675, 0, 842, 200, fill='white', outline="")  # cover up black
@@ -118,6 +123,17 @@ class BoardGUI:
 
     # this function is used to draw the pieces on the board
     def drawPieces(self):
+
+        if (self.turn % 2 != 0):
+            # draw notation onto screen
+            self.w.create_rectangle(840, 0, 2000, 2000, fill='white', outline="")  # cover up old text
+            self.w.create_text(925, 15, fill="black", font="Times 15 bold", text="Game Notation")
+            F = open("notation.txt", "r+")
+            input = F.readlines()
+            startPixel = 45
+            for line in input:
+                self.w.create_text(925, startPixel, fill="black", font="Times 7", text=line)
+                startPixel = startPixel+15
 
         # all these lines set the variables to the right image path
         # subsample function reduces the size of the image

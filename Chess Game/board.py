@@ -103,21 +103,22 @@ class Board:
                     7: 'g',
                     8: 'h'
                 }
+                F = open("notation.txt", "a+")
                 # Print notation IN BETA
                 if (turn%2==0): # if white
-                    print(int(turn/2+1), end = '')
-                    print('. ', end = '')
+                    F.write(str(int(turn/2+1)))
+                    F.write('. ')
                     if self.pieceOnBoard != 'P':
-                        print(self.pieceOnBoard, end = '')
-                    print(xMappings.get(self.x2), end = '')
-                    print(self.y2, end = '')
+                        F.write(self.pieceOnBoard)
+                    F.write(xMappings.get(self.y2+1)) # x coordinate
+                    F.write(str(8-self.x2)) # y coordinate
                 else: # if black
-                    print(' ', end = '')
+                    F.write(' ')
                     if self.pieceOnBoard != 'p':
-                        print(self.pieceOnBoard, end = '')
-                    print(xMappings.get(self.x2), end = '')
-                    print(self.y2, end = '')
-                    print()
+                        F.write(self.pieceOnBoard)
+                    F.write(xMappings.get(self.y2+1)) # x coordinate
+                    F.write(str(8-self.x2)) # y coordinate
+                    F.write("\n")
                 whiteUnderCheck = False
                 blackUnderCheck = False
                 return True
@@ -1134,7 +1135,8 @@ class Board:
 
             # if every single move of white ends in Check, that denotes Checkmate!
             if counter == len(allPossibleMoves):
-                print("Checkmate")
+                f = open("notation.txt", "a+")
+                f.write("Checkmate")
                 return True
             else:
                 return False
@@ -1169,7 +1171,8 @@ class Board:
 
             # if every single move of black ends in Check, that denotes Checkmate!
             if counter == len(allPossibleMoves):
-                print("Checkmate")
+                f = open("notation.txt", "a+")
+                f.write("Checkmate")
                 return True
             else:
                 return False
