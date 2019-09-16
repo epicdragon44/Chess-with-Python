@@ -150,7 +150,7 @@ class BoardGUI:
         self.w.whiteKnight = PhotoImage(file='knightWhite.gif').subsample(4, 4)
         self.w.whiteBishop = PhotoImage(file='bishopWhite.gif').subsample(4, 4)
         self.w.whiteQueen = PhotoImage(file='queenWhite.gif').subsample(4, 4)
-        self.w.whiteKing = PhotoImage(file='kingWhite.gif').subsample(4, 4)
+        self.w.whiteKing = PhotoImage(file='kingWhite.png').subsample(4, 4)
         self.w.whitePawn = PhotoImage(file='pawnWhite.gif').subsample(4, 4)
 
         self.w.blackPawn = PhotoImage(file='pawnBlack.gif').subsample(4, 4)
